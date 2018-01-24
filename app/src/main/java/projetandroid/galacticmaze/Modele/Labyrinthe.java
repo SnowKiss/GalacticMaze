@@ -25,6 +25,11 @@ public class Labyrinthe {
         murs.add(nouvelleZone);
     }
 
+    public void ajouterTrou(Trou nouveauTrou)
+    {
+        trous.add(nouveauTrou);
+    }
+
     public ArrayList<Forme> getMurs() {
         return murs;
     }

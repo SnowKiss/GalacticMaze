@@ -13,7 +13,7 @@ public class Jeu extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jeu);
-        Initializer initializer = new Initializer();
+        Initializer initializer = new Initializer(this);
         initializer.startGame();
     }
 }

@@ -4,22 +4,22 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import projetandroid.galacticmaze.R;
 
 public class Menu extends Activity implements View.OnClickListener{
 
-    Button btn_lvl1;
-    Button btn_lvl2;
-    Button btn_lvl3;
+    ImageButton btn_lvl1;
+    ImageButton btn_lvl2;
+    ImageButton btn_lvl3;
     public static final int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        btn_lvl1 = (Button) findViewById(R.id.btn_lvl1);
+        btn_lvl1 = (ImageButton) findViewById(R.id.btn_lvl1);
         btn_lvl1.setOnClickListener(this);
     }
 
@@ -33,7 +33,6 @@ public class Menu extends Activity implements View.OnClickListener{
             startActivityForResult(intent,REQUEST_CODE);
         }
     }
-
 
     public void closeApp(View v)
     {

@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by John on 23/01/2018.
  */
 
-class Canon {
+public class Canon {
     private Point2D coordonnees;
     private ArrayList<Bille> projectiles;
     private Point2D cible;

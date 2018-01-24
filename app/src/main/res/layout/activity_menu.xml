@@ -8,7 +8,7 @@
     android:background="@drawable/bg">
 
     <LinearLayout
-        android:layout_width="800dp"
+        android:layout_width="700dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
@@ -25,30 +25,41 @@
             android:scaleType="fitXY"
             android:src="@drawable/logo" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_lvl1"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Niveau 1" />
+            android:src="@drawable/btn_lvl1"
+            android:background="@android:color/transparent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_lvl2"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Niveau 2" />
+            android:src="@drawable/btn_lvl2"
+            android:background="@android:color/transparent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_lvl3"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Niveau 3" />
+            android:src="@drawable/btn_lvl3"
+            android:background="@android:color/transparent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"/>
 
-        <Button
-            android:id="@+id/btn_close"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/btn_fermer"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:onClick="closeApp"
-            android:text="Fermer" />
+            android:src="@drawable/btn_fermer"
+            android:background="@android:color/transparent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

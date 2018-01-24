@@ -57,7 +57,7 @@ public class InputManager implements SensorEventListener {
     }
 
     public float getDeltaX() {
-        return deltaX;
+        return deltaX/50;
     }
 
     public void setDeltaX(float deltaX) {
@@ -65,7 +65,7 @@ public class InputManager implements SensorEventListener {
     }
 
     public float getDeltaY() {
-        return deltaY;
+        return deltaY/50;
     }
 
     public void setDeltaY(float deltaY) {

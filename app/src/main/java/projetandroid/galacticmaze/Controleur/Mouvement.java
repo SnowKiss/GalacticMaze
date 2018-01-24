@@ -11,29 +11,30 @@ import projetandroid.galacticmaze.Vue.InputManager;
 
 public class Mouvement {
 
-    private Bille bille;
     private InputManager inputManager;
 
-    public Mouvement(Bille bille, InputManager inputManager) {
-        this.bille = bille;
+    public Mouvement(InputManager inputManager) {
         this.inputManager = inputManager;
     }
 
-    public void applyDeltaTime()
+    public void applyDeltaTime(Bille bille)
     {
+        float seuil = 0.02f;
+        float coefFrottement = 0.993f;
+
         // on met à jour l'acceleration
         bille.setAcceleration(
                 new Vecteur(
                         new Point2D(0,0),
-                        new Point2D(inputManager.getDeltaX(),inputManager.getDeltaY())));
+                        new Point2D(Math.abs(inputManager.getDeltaX())<seuil?0:inputManager.getDeltaX(),Math.abs(inputManager.getDeltaY())<seuil?0:inputManager.getDeltaY())));
 
         // on met à jour la vitesse
         bille.setVitesse(
                 new Vecteur(
                         new Point2D(0,0),
                         new Point2D(
-                                bille.getVitesse().getFin().getX()+bille.getAcceleration().getFin().getX(),
-                                bille.getVitesse().getFin().getY()+bille.getAcceleration().getFin().getY())));
+                                Math.abs((bille.getVitesse().getFin().getX()+bille.getAcceleration().getFin().getX())*coefFrottement)<seuil?0:(bille.getVitesse().getFin().getX()+bille.getAcceleration().getFin().getX())*coefFrottement,
+                                Math.abs((bille.getVitesse().getFin().getY()+bille.getAcceleration().getFin().getY())*coefFrottement)<seuil?0:(bille.getVitesse().getFin().getY()+bille.getAcceleration().getFin().getY())*coefFrottement)));
 
         // on verifie les collisions
         // TODO gestion des collisions
@@ -45,11 +46,4 @@ public class Mouvement {
                         bille.getCoordonnees().getY()+bille.getVitesse().getFin().getY()));
     }
 
-    public Bille getBille() {
-        return bille;
-    }
-
-    public void setBille(Bille bille) {
-        this.bille = bille;
-    }
 }
