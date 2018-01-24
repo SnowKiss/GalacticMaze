@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="projetandroid.galacticmaze.Vue.Menu"
+    android:background="@drawable/bg">
+
+    <LinearLayout
+        android:layout_width="800dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/logo" />
+
+        <Button
+            android:id="@+id/btn_lvl1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Niveau 1" />
+
+        <Button
+            android:id="@+id/btn_lvl2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Niveau 2" />
+
+        <Button
+            android:id="@+id/btn_lvl3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Niveau 3" />
+
+        <Button
+            android:id="@+id/btn_close"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="closeApp"
+            android:text="Fermer" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
