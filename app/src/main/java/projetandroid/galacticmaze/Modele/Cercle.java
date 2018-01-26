@@ -20,4 +20,8 @@ public class Cercle extends Forme {
     public void setRayon(float rayon) {
         this.rayon = rayon;
     }
+
+    public Droite getTangente(Point2D p) {
+        return null;
+    }
 }
