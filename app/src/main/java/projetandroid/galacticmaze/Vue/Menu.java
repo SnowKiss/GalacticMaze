@@ -21,6 +21,8 @@ public class Menu extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_menu);
         btn_lvl1 = (ImageButton) findViewById(R.id.btn_lvl1);
         btn_lvl1.setOnClickListener(this);
+        btn_lvl2 = (ImageButton) findViewById(R.id.btn_lvl2);
+        btn_lvl2.setOnClickListener(this);
     }
 
     /*
@@ -30,6 +32,12 @@ public class Menu extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         if (v == btn_lvl1) {
             Intent intent = new Intent(Menu.this, Jeu.class);
+            intent.putExtra("level",1);
+            startActivityForResult(intent,REQUEST_CODE);
+        }
+        if (v == btn_lvl2) {
+            Intent intent = new Intent(Menu.this, Jeu.class);
+            intent.putExtra("level",2);
             startActivityForResult(intent,REQUEST_CODE);
         }
     }

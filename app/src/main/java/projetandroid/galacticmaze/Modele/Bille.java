@@ -24,6 +24,18 @@ public class Bille {
         this.rayon = rayon;
     }
 
+    public Bille(Point2D coordonnees, Vecteur vitesse, Vecteur acceleration, float rayon) {
+        this.coordonnees = coordonnees;
+        this.vitesse = vitesse;
+        this.acceleration = acceleration;
+        this.rayon = rayon;
+    }
+
+    public Bille copy()
+    {
+        return new Bille(coordonnees,vitesse,acceleration,rayon);
+    }
+
     public Point2D getCoordonnees() {
         return coordonnees;
     }
@@ -54,5 +66,9 @@ public class Bille {
 
     public void setRayon(float rayon) {
         this.rayon = rayon;
+    }
+
+    public Point2D getCentre() {
+        return new Point2D(coordonnees.getX()+rayon, coordonnees.getY()+rayon);
     }
 }

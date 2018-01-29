@@ -8,6 +8,11 @@ public abstract class Zone {
     private Point2D coordonnees;
     private float rayon;
 
+    public Zone(Point2D coordonnees) {
+        this.coordonnees = coordonnees;
+        this.rayon = 50;
+    }
+
     public Zone(Point2D coordonnees, float rayon) {
         this.coordonnees = coordonnees;
         this.rayon = rayon;

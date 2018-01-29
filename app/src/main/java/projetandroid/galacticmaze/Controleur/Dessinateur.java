@@ -8,6 +8,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -54,8 +57,9 @@ public class Dessinateur {
                 (int)player.getRayon()*2,
                 false));
         gameLayout.addView(playerView);
+        playerView.setX(player.getCoordonnees().getX());
+        playerView.setY(player.getCoordonnees().getY());
         dessinerPlayer(player);
-
     }
     
     public void updateVue(Bille player, Labyrinthe labyrinthe) {
@@ -76,7 +80,7 @@ public class Dessinateur {
             {
                 afficherRectangle((Rectangle) forme, myPaint);
             }
-            catch(Error e)
+            catch(ClassCastException e)
             {
                 afficherCercle((Cercle) forme, myPaint);
             }
@@ -115,18 +119,37 @@ public class Dessinateur {
             ImageView trouView = new ImageView(gameActivity);
             trouView.setImageBitmap(Bitmap.createScaledBitmap(
                     BitmapFactory.decodeResource(gameActivity.getResources(), R.drawable.blackhole),
-                    (int)trou.getRayon()*2,
-                    (int)trou.getRayon()*2,
+                    (int)(trou.getRayon()*6),
+                    (int)(trou.getRayon()*6),
                     false));
+            trouView.setX(trou.getCoordonnees().getX()-100);
+            trouView.setY(trou.getCoordonnees().getY()-100);
+
+            //RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, trouView.getWidth()/2, Animation.RELATIVE_TO_SELF, trouView.getHeight());
+            RotateAnimation rotate = new RotateAnimation(0, 720,trou.getCoordonnees().getX()+50,trou.getCoordonnees().getY()+50);
+
+            rotate.setDuration(60000);
+            rotate.setRepeatCount(Animation.INFINITE);
+            rotate.setRepeatMode(Animation.REVERSE);
+            trouView.setAnimation(rotate);
+
             gameLayout.addView(trouView);
         }
-
+        /*ImageView imgView = new ImageView(gameActivity);
+        imgView.setImageBitmap(canvasBM);
+        imgView.setImageAlpha(100);
+        gameLayout.addView(imgView);*/
+        //TODO remplacer les zones par des assets
     }
 
     private void dessinerPlayer(Bille player) {
         //TODO Animation pour rendu smooth (problèmes liés à l'arrondi en int)
         playerView.setX(player.getCoordonnees().getX());
         playerView.setY(player.getCoordonnees().getY());
+        /*TranslateAnimation translateAnimation = new TranslateAnimation(0.0f, 100.0f, 0.0f, 100.0f);
+        translateAnimation.setDuration(1000); // 1 second
+        playerView.startAnimation(translateAnimation);*/
+
     }
 
     private void afficherRectangle(Rectangle rectangle, Paint myPaint)
@@ -144,7 +167,8 @@ public class Dessinateur {
 
     private void afficherCercle(Cercle cercle, Paint myPaint)
     {
-        Log.i("ETAT","COUCOU");
-        //TODO creation des cercles
+        //Log.i("ETAT","COUCOU");
+        myPaint.setColor(cercle.isPlein()? Color.BLACK:Color.GRAY);
+        canvas.drawCircle(cercle.getCoordonnees().getX(),cercle.getCoordonnees().getY(),cercle.getRayon(),myPaint);
     }
 }

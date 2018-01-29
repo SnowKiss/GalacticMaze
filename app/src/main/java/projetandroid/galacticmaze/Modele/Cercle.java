@@ -22,6 +22,13 @@ public class Cercle extends Forme {
     }
 
     public Droite getTangente(Point2D p) {
+
+        // TODO renvoyer la tangente
+
+        // Chercher le point H sur la demie droite [cercle.centre,point) tel que distance = cercle.rayon
+
+        // renvoie la perpendiculaire à la droite (cercle.centre,point) passant par H
+
         return null;
     }
 }

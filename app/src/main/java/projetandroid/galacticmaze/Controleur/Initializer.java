@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.widget.RelativeLayout;
 
 import projetandroid.galacticmaze.Modele.Bille;
+import projetandroid.galacticmaze.Modele.Cercle;
 import projetandroid.galacticmaze.Modele.Labyrinthe;
 import projetandroid.galacticmaze.Modele.Partie;
 import projetandroid.galacticmaze.Modele.Point2D;
@@ -12,6 +13,7 @@ import projetandroid.galacticmaze.Modele.SpawnZone;
 import projetandroid.galacticmaze.Modele.Trou;
 import projetandroid.galacticmaze.Modele.WinZone;
 import projetandroid.galacticmaze.R;
+import projetandroid.galacticmaze.Vue.GameOverDialog;
 import projetandroid.galacticmaze.Vue.InputManager;
 
 /**
@@ -25,21 +27,25 @@ public class Initializer {
     private CollisionManager collisionManager;
     private Mouvement mouvement;
     private InputManager inputManager;
+    private GameOverDialog gameOverDialog;
+    private int level;
 
-    public Initializer(Activity gameActivity) {
+    public Initializer(Activity gameActivity, int level) {
         this.gameActivity = gameActivity;
         this.inputManager = new InputManager(gameActivity);
         this.dessinateur = new Dessinateur((RelativeLayout) gameActivity.findViewById(R.id.gamelayout), gameActivity);
         this.collisionManager = new CollisionManager();
-        this.mouvement = new Mouvement(inputManager);
+        this.gameOverDialog = new GameOverDialog(gameActivity);
+        this.level = level;
     }
 
     public void startGame()
     {
-        Labyrinthe labyrinthe = initLabyrinthe();
+        Labyrinthe labyrinthe = initLabyrinthe(this.level);
         Bille player = initBille(labyrinthe.getSpawnZone());
+        this.mouvement = new Mouvement(inputManager, labyrinthe);
         dessinateur.initVue(player,labyrinthe);
-        Partie partie = new Partie(player, labyrinthe, dessinateur, collisionManager, mouvement);
+        Partie partie = new Partie(player, labyrinthe, dessinateur, collisionManager, mouvement, gameOverDialog);
         // Game loop
         partie.start();
     }
@@ -50,20 +56,41 @@ public class Initializer {
         return bille;
     }
 
-    private Labyrinthe initLabyrinthe() {
-        // On ajoute la zone de spawn et la zone à atteindre
-        Labyrinthe labyrinthe = new Labyrinthe(
-                                        new SpawnZone(new Point2D(150,150), 60),
-                                        new WinZone(new Point2D(1000,150), 60));
+    private Labyrinthe initLabyrinthe(int level) {
 
-        // On ajoute les murs par extrusion
-        labyrinthe.ajouterZone(new Rectangle(new Point2D(0,0), 1280, 727, 0, true));
-        labyrinthe.ajouterZone(new Rectangle(new Point2D(50,50), 1180, 627, 0, false));
-        labyrinthe.ajouterZone(new Rectangle(new Point2D(350,50), 580, 427, 0, true));
+        if (level==1)
+        {
+            // On ajoute la zone de spawn et la zone à atteindre
+            Labyrinthe labyrinthe = new Labyrinthe(
+                    new SpawnZone(new Point2D(150,150), 60),
+                    new WinZone(new Point2D(1000,150), 60));
 
-        labyrinthe.ajouterTrou(new Trou(new Point2D(110,400), 50));
+            // On ajoute les murs par extrusion
+            labyrinthe.ajouterZone(new Rectangle(new Point2D(0,0), 1280, 727, 0, true));
+            labyrinthe.ajouterZone(new Rectangle(new Point2D(50,50), 1180, 627, 0, false));
+            labyrinthe.ajouterZone(new Rectangle(new Point2D(350,50), 580, 427, 0, true));
 
-        return labyrinthe;
+            labyrinthe.ajouterTrou(new Trou(new Point2D(550,550)));
+
+            return labyrinthe;
+        }
+        if (level==2)
+        {
+            // On ajoute la zone de spawn et la zone à atteindre
+            Labyrinthe labyrinthe = new Labyrinthe(
+                    new SpawnZone(new Point2D(150,150), 60),
+                    new WinZone(new Point2D(1000,150), 60));
+
+            // On ajoute les murs par extrusion
+            labyrinthe.ajouterZone(new Rectangle(new Point2D(0,0), 1280, 727, 0, true));
+            labyrinthe.ajouterZone(new Cercle(new Point2D(360,360), 300, false));
+            labyrinthe.ajouterZone(new Cercle(new Point2D(360,360), 50, true));
+
+            labyrinthe.ajouterTrou(new Trou(new Point2D(550,550)));
+
+            return labyrinthe;
+        }
+        return null;
     }
 
     public Activity getGameActivity() {

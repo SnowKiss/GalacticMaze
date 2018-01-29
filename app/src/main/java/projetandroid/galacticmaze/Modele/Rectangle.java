@@ -40,4 +40,60 @@ public class Rectangle extends Forme {
     public void setAngle(float angle) {
         this.angle = angle;
     }
+
+    public Droite coteGauche()
+    {
+        return new Droite(
+                getCoordonnees(),
+                new Point2D(getCoordonnees().getX(),getCoordonnees().getY()+largeur));
+    }
+
+    public Droite coteDroite()
+    {
+        return new Droite(
+                new Point2D(getCoordonnees().getX()+longueur,getCoordonnees().getY()),
+                new Point2D(getCoordonnees().getX()+longueur,getCoordonnees().getY()+largeur));
+    }
+
+    public Droite coteHaut()
+    {
+        return new Droite(
+                getCoordonnees(),
+                new Point2D(getCoordonnees().getX()+longueur,getCoordonnees().getY()));
+    }
+
+    public Droite coteBas()
+    {
+        return new Droite(
+                new Point2D(getCoordonnees().getX(),getCoordonnees().getY()+largeur),
+                new Point2D(getCoordonnees().getX()+longueur,getCoordonnees().getY()+largeur));
+    }
+
+    public Point2D pointHG() {
+        return new Point2D(
+                getCoordonnees().getX(),
+                getCoordonnees().getY()
+        );
+    }
+
+    public Point2D pointHD() {
+        return new Point2D(
+                getCoordonnees().getX()+longueur,
+                getCoordonnees().getY()
+        );
+    }
+
+    public Point2D pointBG() {
+        return new Point2D(
+                getCoordonnees().getX(),
+                getCoordonnees().getY()+largeur
+        );
+    }
+
+    public Point2D pointBD() {
+        return new Point2D(
+                getCoordonnees().getX()+longueur,
+                getCoordonnees().getY()+largeur
+        );
+    }
 }

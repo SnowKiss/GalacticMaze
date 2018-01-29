@@ -10,11 +10,14 @@ public class Canon {
     private Point2D coordonnees;
     private ArrayList<Bille> projectiles;
     private Point2D cible;
+    private int cadence; // nombre de frames entre deux tirs
 
-    public Canon(Point2D coordonnees, Point2D cible) {
+    public Canon(Point2D coordonnees, Point2D cible, int cadence) {
         this.coordonnees = coordonnees;
         this.cible = cible;
         this.projectiles = new ArrayList<Bille>();
+        this.cadence = cadence;
+        // TODO Handler avec la cadence pour le tir
     }
 
     public Point2D getCoordonnees() {
