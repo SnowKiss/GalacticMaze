@@ -23,6 +23,8 @@ public class Menu extends Activity implements View.OnClickListener{
         btn_lvl1.setOnClickListener(this);
         btn_lvl2 = (ImageButton) findViewById(R.id.btn_lvl2);
         btn_lvl2.setOnClickListener(this);
+        btn_lvl3 = (ImageButton) findViewById(R.id.btn_lvl3);
+        btn_lvl3.setOnClickListener(this);
     }
 
     /*
@@ -38,6 +40,11 @@ public class Menu extends Activity implements View.OnClickListener{
         if (v == btn_lvl2) {
             Intent intent = new Intent(Menu.this, Jeu.class);
             intent.putExtra("level",2);
+            startActivityForResult(intent,REQUEST_CODE);
+        }
+        if (v == btn_lvl3) {
+            Intent intent = new Intent(Menu.this, Jeu.class);
+            intent.putExtra("level",3);
             startActivityForResult(intent,REQUEST_CODE);
         }
     }

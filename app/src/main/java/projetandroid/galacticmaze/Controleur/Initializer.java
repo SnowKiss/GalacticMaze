@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.widget.RelativeLayout;
 
 import projetandroid.galacticmaze.Modele.Bille;
+import projetandroid.galacticmaze.Modele.Canon;
 import projetandroid.galacticmaze.Modele.Cercle;
 import projetandroid.galacticmaze.Modele.Labyrinthe;
 import projetandroid.galacticmaze.Modele.Partie;
@@ -87,6 +88,24 @@ public class Initializer {
             labyrinthe.ajouterZone(new Cercle(new Point2D(360,360), 50, true));
 
             labyrinthe.ajouterTrou(new Trou(new Point2D(550,550)));
+
+            return labyrinthe;
+        }
+        if (level==3)
+        {
+            // On ajoute la zone de spawn et la zone à atteindre
+            Labyrinthe labyrinthe = new Labyrinthe(
+                    new SpawnZone(new Point2D(150,150), 60),
+                    new WinZone(new Point2D(1000,150), 60));
+
+            // On ajoute les murs par extrusion
+            labyrinthe.ajouterZone(new Rectangle(new Point2D(0,0), 1280, 727, 0, true));
+            labyrinthe.ajouterZone(new Rectangle(new Point2D(50,50), 1180, 627, 0, false));
+            labyrinthe.ajouterZone(new Rectangle(new Point2D(350,50), 580, 427, 0, true));
+
+            labyrinthe.ajouterTrou(new Trou(new Point2D(550,550)));
+
+            labyrinthe.ajouterCanon(new Canon(new Point2D(100,600),labyrinthe.getSpawnZone().getCentre(),5000));
 
             return labyrinthe;
         }

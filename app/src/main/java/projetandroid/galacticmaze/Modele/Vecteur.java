@@ -28,4 +28,8 @@ public class Vecteur {
     public void setFin(Point2D fin) {
         this.fin = fin;
     }
+
+    public Vecteur scaled(float facteur) {
+        return new Vecteur(new Point2D(origine.getX()*facteur,origine.getY()*facteur),new Point2D(fin.getX()*facteur,fin.getY()*facteur));
+    }
 }

@@ -59,8 +59,19 @@ public class Partie {
                 {
                     // on met à jour les accelerations en fonction de l'acceleromètre
                     // on vérifie les collisions et on applique ses effets
-                    // on applique les déplacements
+                    // on applique les déplacements sur le joueur
                     mouvement.applyDeltaTime(player);
+
+                    // on applique les déplacements sur les projectiles
+                    if(labyrinthe.getCanon()!=null)
+                    {
+                        labyrinthe.getCanon().setCible(player.getCentre());
+                        for(Bille projectile:labyrinthe.getCanon().getProjectiles())
+                        {
+                            mouvement.applyDeltaTime(projectile);
+                        }
+                    }
+
 
                     // on met à jour la vue
                     dessinateur.updateVue(player, labyrinthe);

@@ -69,4 +69,8 @@ public class Labyrinthe {
     public void setCanon(Canon canon) {
         this.canon = canon;
     }
+
+    public void ajouterCanon(Canon canon) {
+        setCanon(canon);
+    }
 }

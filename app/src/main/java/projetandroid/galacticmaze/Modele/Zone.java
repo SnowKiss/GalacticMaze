@@ -33,4 +33,8 @@ public abstract class Zone {
     public void setRayon(float rayon) {
         this.rayon = rayon;
     }
+
+    public Point2D getCentre() {
+        return new Point2D(coordonnees.getX()+rayon,coordonnees.getY()+rayon);
+    }
 }
