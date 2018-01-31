@@ -80,14 +80,17 @@ public class Initializer {
             // On ajoute la zone de spawn et la zone à atteindre
             Labyrinthe labyrinthe = new Labyrinthe(
                     new SpawnZone(new Point2D(150,150), 60),
-                    new WinZone(new Point2D(1000,150), 60));
+                    new WinZone(new Point2D(900,150), 60));
 
             // On ajoute les murs par extrusion
             labyrinthe.ajouterZone(new Rectangle(new Point2D(0,0), 1280, 727, 0, true));
             labyrinthe.ajouterZone(new Cercle(new Point2D(360,360), 300, false));
             labyrinthe.ajouterZone(new Cercle(new Point2D(360,360), 50, true));
+            labyrinthe.ajouterZone(new Cercle(new Point2D(800,360), 300, false));
+            labyrinthe.ajouterZone(new Cercle(new Point2D(800,360), 50, true));
+            labyrinthe.ajouterZone(new Rectangle(new Point2D(350,0), 400, 385, 0, true));
 
-            labyrinthe.ajouterTrou(new Trou(new Point2D(550,550)));
+            //labyrinthe.ajouterTrou(new Trou(new Point2D(550,370)));
 
             return labyrinthe;
         }
