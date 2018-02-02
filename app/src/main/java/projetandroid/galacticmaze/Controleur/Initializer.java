@@ -35,7 +35,7 @@ public class Initializer {
         this.gameActivity = gameActivity;
         this.inputManager = new InputManager(gameActivity);
         this.dessinateur = new Dessinateur((RelativeLayout) gameActivity.findViewById(R.id.gamelayout), gameActivity);
-        this.collisionManager = new CollisionManager();
+        this.collisionManager = new CollisionManager(gameActivity);
         this.gameOverDialog = new GameOverDialog(gameActivity);
         this.level = level;
     }
@@ -84,18 +84,19 @@ public class Initializer {
 
             // On ajoute les murs par extrusion
             labyrinthe.ajouterZone(new Rectangle(new Point2D(0,0), 1280, 727, 0, true));
-            labyrinthe.ajouterZone(new Cercle(new Point2D(360,360), 300, false));
-            labyrinthe.ajouterZone(new Cercle(new Point2D(360,360), 50, true));
             labyrinthe.ajouterZone(new Cercle(new Point2D(800,360), 300, false));
             labyrinthe.ajouterZone(new Cercle(new Point2D(800,360), 50, true));
-            labyrinthe.ajouterZone(new Rectangle(new Point2D(350,0), 400, 385, 0, true));
+            labyrinthe.ajouterZone(new Cercle(new Point2D(360,360), 300, false));
+            labyrinthe.ajouterZone(new Cercle(new Point2D(360,360), 50, true));
+            labyrinthe.ajouterZone(new Rectangle(new Point2D(350,0), 450, 360, 0, true));
 
-            //labyrinthe.ajouterTrou(new Trou(new Point2D(550,370)));
+            labyrinthe.ajouterTrou(new Trou(new Point2D(550,370)));
 
             return labyrinthe;
         }
         if (level==3)
         {
+            //TODO level redesign
             // On ajoute la zone de spawn et la zone à atteindre
             Labyrinthe labyrinthe = new Labyrinthe(
                     new SpawnZone(new Point2D(150,150), 60),
