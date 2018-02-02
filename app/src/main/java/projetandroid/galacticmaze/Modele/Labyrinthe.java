@@ -18,6 +18,7 @@ public class Labyrinthe {
         this.winZone = winZone;
         this.murs = new ArrayList<Forme>();
         this.trous = new ArrayList<Trou>();
+        this.canon = null;
     }
 
     public void ajouterZone(Forme nouvelleZone)

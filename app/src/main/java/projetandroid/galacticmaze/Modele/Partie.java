@@ -2,12 +2,14 @@ package projetandroid.galacticmaze.Modele;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.util.Log;
 
 import projetandroid.galacticmaze.Controleur.CollisionManager;
 import projetandroid.galacticmaze.Controleur.Dessinateur;
 import projetandroid.galacticmaze.Controleur.Mouvement;
+import projetandroid.galacticmaze.R;
 import projetandroid.galacticmaze.Vue.GameOverDialog;
 
 /**
@@ -22,8 +24,10 @@ public class Partie {
     private CollisionManager collisionManager;
     private Mouvement mouvement;
     private GameOverDialog gameOverDialog;
+    private static MediaPlayer gameOverMusic;
+    private static MediaPlayer winMusic;
 
-    public Partie(Bille player, Labyrinthe labyrinthe, Dessinateur dessinateur, CollisionManager collisionManager, Mouvement mouvement, GameOverDialog gameOverDialog) {
+    public Partie(Bille player, Labyrinthe labyrinthe, Dessinateur dessinateur, CollisionManager collisionManager, Mouvement mouvement, GameOverDialog gameOverDialog, Activity gameActivity) {
         this.player = player;
         this.labyrinthe = labyrinthe;
         this.dessinateur = dessinateur;
@@ -31,6 +35,8 @@ public class Partie {
         this.mouvement = mouvement;
         this.gameover = false;
         this.gameOverDialog = gameOverDialog;
+        this.gameOverMusic = MediaPlayer.create(gameActivity, R.raw.loose);
+        this.winMusic = MediaPlayer.create(gameActivity, R.raw.win);
     }
 
     public Bille getPlayer() {
@@ -60,7 +66,7 @@ public class Partie {
                     // on met à jour les accelerations en fonction de l'acceleromètre
                     // on vérifie les collisions et on applique ses effets
                     // on applique les déplacements sur le joueur
-                    mouvement.applyDeltaTime(player);
+                    mouvement.applyDeltaTime(player, true);
 
                     // on applique les déplacements sur les projectiles
                     if(labyrinthe.getCanon()!=null)
@@ -68,7 +74,7 @@ public class Partie {
                         labyrinthe.getCanon().setCible(player.getCentre());
                         for(Bille projectile:labyrinthe.getCanon().getProjectiles())
                         {
-                            mouvement.applyDeltaTime(projectile);
+                            mouvement.applyDeltaTime(projectile, false);
                         }
                     }
 
@@ -81,6 +87,7 @@ public class Partie {
                         if(collisionManager.billeDansZone(player,trou))
                         {
                             gameover = true;
+                            playGameOver();
                             gameOverDialog.afficherResultat("Perdu !", "Vous avez été absorbé par un trou noir !");
                         }
                     }
@@ -89,6 +96,7 @@ public class Partie {
                     if(collisionManager.billeDansZone(player,labyrinthe.getWinZone()))
                     {
                         gameover = true;
+                        playWin();
                         gameOverDialog.afficherResultat("Bravo !", "Vous avez atteint le point d'extraction !");
                     }
 
@@ -103,6 +111,16 @@ public class Partie {
 
                 }
 
+            }
+
+            private void playWin() {
+                winMusic.seekTo(0);
+                winMusic.start();
+            }
+
+            private void playGameOver() {
+                gameOverMusic.seekTo(0);
+                gameOverMusic.start();
             }
         });
     }

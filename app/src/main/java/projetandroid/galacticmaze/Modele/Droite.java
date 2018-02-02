@@ -26,8 +26,11 @@ public class Droite {
 
     public Droite perpendiculaire(Point2D p)
     {
-        // TODO perpendiculaire en un point
-        return (new Droite(getB(),-getA(),getC()));
+        // vecteur directeur = (-b, a)
+        // d : -bx + ay + c = 0
+        // c = b*p.x - a*p.y
+
+        return (new Droite(-getB(),getA(),getB()*p.getX()-getA()*p.getY()));
     }
 
     public boolean estPerpendiculaire(Droite d)

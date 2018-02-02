@@ -8,7 +8,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -69,29 +73,35 @@ public class Dessinateur {
         // on met à jour la vue du joueur
         dessinerPlayer(player);
 
-        // si un nouveau projectile a été crée, on initialise sa vue
-        if(bulletView.size()<labyrinthe.getCanon().getProjectiles().size())
+        if(labyrinthe.getCanon()!=null)
         {
-            ImageView projectileView = new ImageView(gameActivity);
-            projectileView.setImageBitmap(Bitmap.createScaledBitmap(
-                    BitmapFactory.decodeResource(gameActivity.getResources(), R.drawable.meteor),
-                    (int)labyrinthe.getCanon().getProjectiles().get(labyrinthe.getCanon().getProjectiles().size()-1).getRayon()*2,
-                    (int)labyrinthe.getCanon().getProjectiles().get(labyrinthe.getCanon().getProjectiles().size()-1).getRayon()*2,
-                    false));
-            gameLayout.addView(projectileView);
-            bulletView.add(projectileView);
-            //projectileView.setX(labyrinthe.getCanon().getProjectiles().get(labyrinthe.getCanon().getProjectiles().size()-1).getCoordonnees().getX());
-            //projectileView.setY(labyrinthe.getCanon().getProjectiles().get(labyrinthe.getCanon().getProjectiles().size()-1).getCoordonnees().getY());
-            //Log.i("setX :",Float.toString(labyrinthe.getCanon().getProjectiles().get(labyrinthe.getCanon().getProjectiles().size()-1).getCoordonnees().getX()));
-            //Log.i("setY :",Float.toString(labyrinthe.getCanon().getProjectiles().get(labyrinthe.getCanon().getProjectiles().size()-1).getCoordonnees().getY()));
+            // si un nouveau projectile a été crée, on initialise sa vue
+            if(bulletView.size()<labyrinthe.getCanon().getProjectiles().size())
+            {
+                ImageView projectileView = new ImageView(gameActivity);
+                projectileView.setImageBitmap(Bitmap.createScaledBitmap(
+                        BitmapFactory.decodeResource(gameActivity.getResources(), R.drawable.meteor),
+                        (int)labyrinthe.getCanon().getProjectiles().get(labyrinthe.getCanon().getProjectiles().size()-1).getRayon()*2,
+                        (int)labyrinthe.getCanon().getProjectiles().get(labyrinthe.getCanon().getProjectiles().size()-1).getRayon()*2,
+                        false));
+                gameLayout.addView(projectileView);
+                bulletView.add(projectileView);
+                //projectileView.setX(labyrinthe.getCanon().getProjectiles().get(labyrinthe.getCanon().getProjectiles().size()-1).getCoordonnees().getX());
+                //projectileView.setY(labyrinthe.getCanon().getProjectiles().get(labyrinthe.getCanon().getProjectiles().size()-1).getCoordonnees().getY());
+                //Log.i("setX :",Float.toString(labyrinthe.getCanon().getProjectiles().get(labyrinthe.getCanon().getProjectiles().size()-1).getCoordonnees().getX()));
+                //Log.i("setY :",Float.toString(labyrinthe.getCanon().getProjectiles().get(labyrinthe.getCanon().getProjectiles().size()-1).getCoordonnees().getY()));
+            }
+
+            // on met à jout la vue des projectiles
+            int index;
+            for(index=0;index<bulletView.size();index++)
+            {
+                dessinerProjectile(labyrinthe.getCanon().getProjectiles().get(index),bulletView.get(index));
+            }
+
         }
 
-        // on met à jout la vue des projectiles
-        int index;
-        for(index=0;index<bulletView.size();index++)
-        {
-            dessinerProjectile(labyrinthe.getCanon().getProjectiles().get(index),bulletView.get(index));
-        }
+
 
 
         
@@ -143,7 +153,7 @@ public class Dessinateur {
         }
 
         // affichage de la zone de spawn
-        myPaint.setColor(Color.YELLOW);
+        /*myPaint.setColor(Color.YELLOW);
         canvas.drawCircle(
                 labyrinthe.getSpawnZone().getCoordonnees().getX()+labyrinthe.getSpawnZone().getRayon(),
                 labyrinthe.getSpawnZone().getCoordonnees().getY()+labyrinthe.getSpawnZone().getRayon(),
@@ -156,9 +166,9 @@ public class Dessinateur {
                 labyrinthe.getWinZone().getCoordonnees().getX()+labyrinthe.getWinZone().getRayon(),
                 labyrinthe.getWinZone().getCoordonnees().getY()+labyrinthe.getWinZone().getRayon(),
                 labyrinthe.getWinZone().getRayon(),
-                myPaint);
+                myPaint);/*
 
-        /*// affichage du canon
+        /* // affichage du canon
         if (labyrinthe.getCanon()!=null)
         {
             myPaint.setColor(Color.BLUE);
@@ -208,11 +218,43 @@ public class Dessinateur {
         imgView.setImageBitmap(canvasBM);
         imgView.setImageAlpha(100);
         gameLayout.addView(imgView);*/
-        //TODO remplacer les zones par des assets
+
+        // affichage spawnzone
+        ImageView spawnView = new ImageView(gameActivity);
+        spawnView.setImageBitmap(Bitmap.createScaledBitmap(
+                BitmapFactory.decodeResource(gameActivity.getResources(), R.drawable.spawn),
+                (int) labyrinthe.getSpawnZone().getRayon()*2,
+                (int) labyrinthe.getSpawnZone().getRayon()*2,
+                false));
+        spawnView.setX(labyrinthe.getSpawnZone().getCoordonnees().getX());
+        spawnView.setY(labyrinthe.getSpawnZone().getCoordonnees().getY());
+
+        Animation fadeIn = new AlphaAnimation(0.3f, 0.7f);
+        fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
+        fadeIn.setDuration(1150);
+        fadeIn.setRepeatMode(Animation.REVERSE);
+        fadeIn.setRepeatCount(Animation.INFINITE);
+        spawnView.setAnimation(fadeIn);
+
+        gameLayout.addView(spawnView);
+
+        // affichage winzone
+        ImageView winView = new ImageView(gameActivity);
+        winView.setImageBitmap(Bitmap.createScaledBitmap(
+                BitmapFactory.decodeResource(gameActivity.getResources(), R.drawable.win),
+                (int) labyrinthe.getWinZone().getRayon()*2,
+                (int) labyrinthe.getWinZone().getRayon()*2,
+                false));
+        winView.setX(labyrinthe.getWinZone().getCoordonnees().getX());
+        winView.setY(labyrinthe.getWinZone().getCoordonnees().getY());
+
+        winView.setAnimation(fadeIn);
+
+        gameLayout.addView(winView);
     }
 
     private void dessinerPlayer(Bille player) {
-        //TODO Animation pour rendu smooth (problèmes liés à l'arrondi en int)
+
         playerView.setX(player.getCoordonnees().getX());
         playerView.setY(player.getCoordonnees().getY());
         /*TranslateAnimation translateAnimation = new TranslateAnimation(0.0f, 100.0f, 0.0f, 100.0f);

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import projetandroid.galacticmaze.Controleur.SoundManager;
 import projetandroid.galacticmaze.R;
 
 public class Menu extends Activity implements View.OnClickListener{
@@ -25,6 +26,7 @@ public class Menu extends Activity implements View.OnClickListener{
         btn_lvl2.setOnClickListener(this);
         btn_lvl3 = (ImageButton) findViewById(R.id.btn_lvl3);
         btn_lvl3.setOnClickListener(this);
+        startService(new Intent(this, SoundManager.class));
     }
 
     /*

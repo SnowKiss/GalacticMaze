@@ -3,6 +3,7 @@
     package="projetandroid.galacticmaze">
 
     <application
+        android:label="Galactic Maze"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -16,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Vue.Jeu"></activity>
+        <service android:name=".Controleur.SoundManager"/>
     </application>
 
 </manifest>

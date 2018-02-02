@@ -20,7 +20,7 @@ public class Mouvement {
         this.maze = maze;
     }
 
-    public void applyDeltaTime(Bille bille)
+    public void applyDeltaTime(Bille bille, boolean joueur)
     {
         float seuil = 0.02f;
         float coefFrottement = 0.993f;
@@ -45,7 +45,7 @@ public class Mouvement {
                 new Point2D(
                         bille.getCoordonnees().getX()+(bille.getVitesse().getFin().getX()-bille.getVitesse().getOrigine().getX()),
                         bille.getCoordonnees().getY()+(bille.getVitesse().getFin().getY()-bille.getVitesse().getOrigine().getY())));
-        CollisionManager.applyCollision(bille, billeDuFutur, maze);
+        CollisionManager.applyCollision(bille, billeDuFutur, maze, joueur);
 
         // on enlève le bruit
         /*bille.setVitesse(
